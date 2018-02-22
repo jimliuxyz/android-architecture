@@ -26,6 +26,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task;
 
 import java.util.List;
 
+//seeu DAO 對應Method與SQL存取語句
 /**
  * Data Access Object for the tasks table.
  */

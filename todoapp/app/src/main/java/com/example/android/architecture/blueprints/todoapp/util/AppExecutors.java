@@ -47,6 +47,7 @@ public class AppExecutors {
         this.mainThread = mainThread;
     }
 
+    //seeu 建立Thread : I/O Network / UI
     public AppExecutors() {
         this(new DiskIOThreadExecutor(), Executors.newFixedThreadPool(THREAD_COUNT),
                 new MainThreadExecutor());
@@ -65,6 +66,7 @@ public class AppExecutors {
     }
 
     private static class MainThreadExecutor implements Executor {
+        //seeu 建立Main Thread Executor
         private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
         @Override

@@ -16,8 +16,6 @@
 
 package com.example.android.architecture.blueprints.todoapp.data.source.local;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
@@ -26,6 +24,8 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksData
 import com.example.android.architecture.blueprints.todoapp.util.AppExecutors;
 
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 
 /**
@@ -58,6 +58,7 @@ public class TasksLocalDataSource implements TasksDataSource {
         return INSTANCE;
     }
 
+    //seeu IO行為 (thread切換)
     /**
      * Note: {@link LoadTasksCallback#onDataNotAvailable()} is fired if the database doesn't exist
      * or the table is empty.
@@ -70,7 +71,7 @@ public class TasksLocalDataSource implements TasksDataSource {
                 final List<Task> tasks = mTasksDao.getTasks();
                 mAppExecutors.mainThread().execute(new Runnable() {
                     @Override
-                    public void run() {
+                    public void run() { //2. 以Main thread回調
                         if (tasks.isEmpty()) {
                             // This will be called if the table is new or just empty.
                             callback.onDataNotAvailable();
@@ -82,7 +83,7 @@ public class TasksLocalDataSource implements TasksDataSource {
             }
         };
 
-        mAppExecutors.diskIO().execute(runnable);
+        mAppExecutors.diskIO().execute(runnable); //1. 以IO thread執行
     }
 
     /**

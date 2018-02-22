@@ -45,6 +45,7 @@ public class TasksPresenter implements TasksContract.Presenter {
     private boolean mFirstLoad = true;
 
     public TasksPresenter(@NonNull TasksRepository tasksRepository, @NonNull TasksContract.View tasksView) {
+        System.out.println("new TasksPresenter");
         mTasksRepository = checkNotNull(tasksRepository, "tasksRepository cannot be null");
         mTasksView = checkNotNull(tasksView, "tasksView cannot be null!");
 

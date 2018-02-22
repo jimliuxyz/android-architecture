@@ -28,6 +28,7 @@ import com.google.common.base.Strings;
 
 import java.util.UUID;
 
+//seeu 同時定義DB Table與資料類別
 /**
  * Immutable model class for a Task.
  */

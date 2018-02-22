@@ -81,12 +81,16 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("TasksFragment onCreate");
+
         mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mItemListener);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        System.out.println("TasksFragment onResume");
+
         mPresenter.start();
     }
 
@@ -105,6 +109,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.tasks_frag, container, false);
+        System.out.println("TasksFragment onCreateView");
 
         // Set up tasks view
         ListView listView = (ListView) root.findViewById(R.id.tasks_list);
@@ -136,6 +141,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
             }
         });
 
+        //seeu 建立Refresher
         // Set up progress indicator
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
                 (ScrollChildSwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
@@ -352,6 +358,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         return isAdded();
     }
 
+    //seeu TasksList Adapter
     private static class TasksAdapter extends BaseAdapter {
 
         private List<Task> mTasks;

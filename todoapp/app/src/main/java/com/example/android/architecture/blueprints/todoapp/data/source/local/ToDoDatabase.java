@@ -23,19 +23,20 @@ import android.content.Context;
 
 import com.example.android.architecture.blueprints.todoapp.data.Task;
 
+//seeu RoomDatabase 定義資料庫
 /**
  * The Room Database that contains the Task table.
  */
-@Database(entities = {Task.class}, version = 1)
+@Database(entities = {Task.class}, version = 1) //1.宣告Table
 public abstract class ToDoDatabase extends RoomDatabase {
 
     private static ToDoDatabase INSTANCE;
 
-    public abstract TasksDao taskDao();
+    public abstract TasksDao taskDao(); //2.宣告DAO
 
     private static final Object sLock = new Object();
 
-    public static ToDoDatabase getInstance(Context context) {
+    public static ToDoDatabase getInstance(Context context) { //3.建立DB實體
         synchronized (sLock) {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),

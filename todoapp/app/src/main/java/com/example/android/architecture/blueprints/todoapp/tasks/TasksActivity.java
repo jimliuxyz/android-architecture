@@ -45,6 +45,7 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("TasksActivity onCreate");
         setContentView(R.layout.tasks_act);
 
         // Set up the toolbar.
@@ -62,6 +63,7 @@ public class TasksActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
+        //seeu 建立View (Fragment) (不能有狀態)
         TasksFragment tasksFragment =
                 (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (tasksFragment == null) {
@@ -71,6 +73,7 @@ public class TasksActivity extends AppCompatActivity {
                     getSupportFragmentManager(), tasksFragment, R.id.contentFrame);
         }
 
+        //seeu 建立Presenter 與 Model(Repository)
         // Create the presenter
         mTasksPresenter = new TasksPresenter(
                 Injection.provideTasksRepository(getApplicationContext()), tasksFragment);
@@ -81,6 +84,18 @@ public class TasksActivity extends AppCompatActivity {
                     (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);
             mTasksPresenter.setFiltering(currentFiltering);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.out.println("TasksActivity onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("TasksActivity onDestroy");
     }
 
     @Override
