@@ -24,7 +24,7 @@ public abstract class AddEditTaskModule {
     // the Activity. Each UI object gets the dependency it needs and nothing else.
     @Provides
     @ActivityScoped
-    @Nullable
+    @Nullable //0. 也可以注入String或boolean 類型重複就要用@Qualifier做區別
     static String provideTaskId(AddEditTaskActivity activity) {
         return activity.getIntent().getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID);
     }

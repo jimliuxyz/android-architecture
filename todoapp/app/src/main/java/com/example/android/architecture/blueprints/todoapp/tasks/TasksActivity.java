@@ -37,10 +37,10 @@ import dagger.android.support.DaggerAppCompatActivity;
 public class TasksActivity extends DaggerAppCompatActivity {
 
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
-    @Inject
+    @Inject //seeu 在此注入TasksPresenter
     TasksPresenter mTasksPresenter;
-    @Inject
-    Lazy<TasksFragment> taskFragmentProvider;
+    @Inject //seeu 在此注入Lazy<TasksFragment> (一個帶有get()的Provider)
+    Lazy<TasksFragment> taskFragmentProvider; //Lazy能讓我們自己控制依賴實體的時機
     private DrawerLayout mDrawerLayout;
 
     @Override

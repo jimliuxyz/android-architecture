@@ -22,6 +22,9 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityBindingModule {
     @ActivityScoped
+    //seeu 指示activity成為subcomponent(子注射器)
+    //0. 每當建立一次注射器相當產生一個新的環境/生命週
+    //1. 指TasksActivity需要TasksModule.class作為依賴工廠 這是只有TasksActivity能依賴的
     @ContributesAndroidInjector(modules = TasksModule.class)
     abstract TasksActivity tasksActivity();
 
