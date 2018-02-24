@@ -3,8 +3,12 @@ package com.example.android.architecture.blueprints.todoapp.tasks;
 import com.example.android.architecture.blueprints.todoapp.di.ActivityScoped;
 import com.example.android.architecture.blueprints.todoapp.di.FragmentScoped;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
 
 /**
@@ -24,4 +28,17 @@ public abstract class TasksModule {
 
     //seeu 不用@Binds也是可以 只是注射處的型別指定要精準(不能用其父類或介面)
     //abstract TasksPresenter taskPresenter();
+
+    //seeu ActivityScoped測試
+    @Provides
+    @ActivityScoped
+    static ByteArrayInputStream testObj1() {
+        return new ByteArrayInputStream(new byte[]{});
+    }
+
+    //seeu no scope 測試
+    @Provides
+    static InputStreamReader testObj2(ByteArrayInputStream is) {
+        return new InputStreamReader(is);
+    }
 }

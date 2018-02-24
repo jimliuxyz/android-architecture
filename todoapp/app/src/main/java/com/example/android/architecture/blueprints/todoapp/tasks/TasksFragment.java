@@ -24,6 +24,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,11 +44,14 @@ import com.example.android.architecture.blueprints.todoapp.data.Task;
 import com.example.android.architecture.blueprints.todoapp.di.ActivityScoped;
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
 import dagger.android.support.DaggerFragment;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -92,11 +96,20 @@ public class TasksFragment extends DaggerFragment implements TasksContract.View 
         // Requires empty public constructor
     }
 
+    @Inject Lazy<ByteArrayInputStream> objA1;
+    @Inject Lazy<ByteArrayInputStream> objA2;
+
+    @Inject Lazy<InputStreamReader> objB1;
+    @Inject Lazy<InputStreamReader> objB2;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mItemListener);
+        Log.i("trace", "ActivityScoped : " + objA1.get());
+        Log.i("trace", "ActivityScoped : " + objA2.get());
+        Log.i("trace", "no scope : " + objB1.get());
+        Log.i("trace", "no scope : " + objB2.get());
     }
 
     @Override
