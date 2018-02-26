@@ -99,7 +99,7 @@ public class TasksRepository implements TasksDataSource {
      * available first.
      */
     @Override
-    public Flowable<List<Task>> getTasks() {
+    public Flowable<List<Task>> getTasks() {//seeu 匯集local/remote task
         // Respond immediately with cache if available and not dirty
         if (mCachedTasks != null && !mCacheIsDirty) {
             return Flowable.fromIterable(mCachedTasks.values()).toList().toFlowable();

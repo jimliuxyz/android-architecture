@@ -64,6 +64,7 @@ public class TasksPresenter implements TasksContract.Presenter {
         mTasksView = checkNotNull(tasksView, "tasksView cannot be null!");
         mSchedulerProvider = checkNotNull(schedulerProvider, "schedulerProvider cannot be null");
 
+        //seeu 透過CompositeDisposable取消訂閱
         mCompositeDisposable = new CompositeDisposable();
         mTasksView.setPresenter(this);
     }
@@ -110,9 +111,10 @@ public class TasksPresenter implements TasksContract.Presenter {
         EspressoIdlingResource.increment(); // App is busy until further notice
 
         mCompositeDisposable.clear();
+        //seeu presenter取tasks
         Disposable disposable = mTasksRepository
                 .getTasks()
-                .flatMap(Flowable::fromIterable)
+                .flatMap(Flowable::fromIterable)//0. 透過flatMap將Flowable<List<Task>>轉Flowable<Task>
                 .filter(task -> {
                     switch (mCurrentFiltering) {
                         case ACTIVE_TASKS:
@@ -124,7 +126,7 @@ public class TasksPresenter implements TasksContract.Presenter {
                             return true;
                     }
                 })
-                .toList()
+                .toList()//1.處理完再轉回Flowable<List<Task>>
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
                 .doFinally(() -> {
@@ -135,6 +137,7 @@ public class TasksPresenter implements TasksContract.Presenter {
                 .subscribe(
                         // onNext
                         tasks -> {
+                            //2.在presenter訂閱 傳到view的資料已經脫離observable
                             processTasks(tasks);
                             mTasksView.setLoadingIndicator(false);
                         },

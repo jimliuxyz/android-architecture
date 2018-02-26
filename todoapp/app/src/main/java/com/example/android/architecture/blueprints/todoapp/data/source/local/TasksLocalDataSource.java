@@ -67,7 +67,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @NonNull
-    private Task getTask(@NonNull Cursor c) {
+    private Task getTask(@NonNull Cursor c) {//seeu DB Cursor轉出資料類型Task
         String itemId = c.getString(c.getColumnIndexOrThrow(TaskEntry.COLUMN_NAME_ENTRY_ID));
         String title = c.getString(c.getColumnIndexOrThrow(TaskEntry.COLUMN_NAME_TITLE));
         String description =
@@ -91,7 +91,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public Flowable<List<Task>> getTasks() {
+    public Flowable<List<Task>> getTasks() {//seeu 從DB取得資料
         String[] projection = {
                 TaskEntry.COLUMN_NAME_ENTRY_ID,
                 TaskEntry.COLUMN_NAME_TITLE,
@@ -99,9 +99,9 @@ public class TasksLocalDataSource implements TasksDataSource {
                 TaskEntry.COLUMN_NAME_COMPLETED
         };
         String sql = String.format("SELECT %s FROM %s", TextUtils.join(",", projection), TaskEntry.TABLE_NAME);
-        return mDatabaseHelper.createQuery(TaskEntry.TABLE_NAME, sql)
-                .mapToList(mTaskMapperFunction)
-                .toFlowable(BackpressureStrategy.BUFFER);
+        return mDatabaseHelper.createQuery(TaskEntry.TABLE_NAME, sql) //0.建QueryObservable
+                .mapToList(mTaskMapperFunction) //1.result cursor轉task
+                .toFlowable(BackpressureStrategy.BUFFER); //2.將Observable轉為Flowable
     }
 
     @Override
