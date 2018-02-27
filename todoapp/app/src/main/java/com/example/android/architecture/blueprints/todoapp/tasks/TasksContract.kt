@@ -26,6 +26,7 @@ interface TasksContract {
 
     interface View : BaseView<Presenter> {
 
+        //seeu interface可以加變數
         var isActive: Boolean
 
         fun setLoadingIndicator(active: Boolean)

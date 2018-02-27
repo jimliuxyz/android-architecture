@@ -43,18 +43,21 @@ class TasksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tasks_act)
 
+        //seeu 同於apply的用途 只是fun接在參數列
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
         }
 
+        //seeu apply:方便建立物件時同時針對該物件做額外初始化客製化
         // Set up the navigation drawer.
         drawerLayout = (findViewById<DrawerLayout>(R.id.drawer_layout)).apply {
             setStatusBarBackground(R.color.colorPrimaryDark)
         }
         setupDrawerContent(findViewById(R.id.nav_view))
 
+        //seeu also:類似apply,但沒有覆蓋context(this),改從參數傳入
         val tasksFragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
                 as TasksFragment? ?: TasksFragment.newInstance().also {
             replaceFragmentInActivity(it, R.id.contentFrame)
@@ -95,7 +98,7 @@ class TasksActivity : AppCompatActivity() {
             // Close the navigation drawer when an item is selected.
             menuItem.isChecked = true
             drawerLayout.closeDrawers()
-            true
+            true //seeu lamda最後一個描述即為回傳
         }
     }
 

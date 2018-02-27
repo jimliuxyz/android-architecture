@@ -34,6 +34,7 @@ class TasksLocalDataSource private constructor(
      * or the table is empty.
      */
     override fun getTasks(callback: TasksDataSource.LoadTasksCallback) {
+        //seeu 執行緒切換簡潔易懂
         appExecutors.diskIO.execute {
             val tasks = tasksDao.getTasks()
             appExecutors.mainThread.execute {

@@ -16,11 +16,11 @@
 package com.example.android.architecture.blueprints.todoapp.tasks
 
 import android.content.Context
-import android.support.v4.view.ViewCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 import android.view.View
 
+//seeu @JvmOverloads:建立多載的建構子(或函數)讓java能夠使用
 /**
  * Extends [SwipeRefreshLayout] to support non-direct descendant scrolling views.
  *

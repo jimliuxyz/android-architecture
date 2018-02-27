@@ -23,24 +23,14 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.PopupMenu
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Display a grid of [Task]s. User can choose to view all, active or completed tasks.
@@ -162,7 +152,7 @@ class TasksFragment : Fragment(), TasksContract.View {
         val root = view ?: return
         with(root.findViewById<SwipeRefreshLayout>(R.id.refresh_layout)) {
             // Make sure setRefreshing() is called after the layout is done with everything else.
-            post { isRefreshing = active }
+            post { isRefreshing = active } //seeu java的setRefreshing被對應到kotlin中的isRefreshing當setter了(有點不好理解)
         }
     }
 
@@ -246,6 +236,7 @@ class TasksFragment : Fragment(), TasksContract.View {
     private class TasksAdapter(tasks: List<Task>, private val itemListener: TaskItemListener)
         : BaseAdapter() {
 
+        //seeu 替tasks設定setter 直接設定後就可以notifyDataSetChanged 減少外部的程式碼
         var tasks: List<Task> = tasks
             set(tasks) {
                 field = tasks

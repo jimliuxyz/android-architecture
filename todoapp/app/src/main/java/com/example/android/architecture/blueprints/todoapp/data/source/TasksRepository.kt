@@ -16,8 +16,7 @@
 package com.example.android.architecture.blueprints.todoapp.data.source
 
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import java.util.ArrayList
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  * Concrete implementation to load tasks from the data sources into a cache.
@@ -216,6 +215,7 @@ class TasksRepository(
     private fun getTaskWithId(id: String) = cachedTasks[id]
 
     private inline fun cacheAndPerform(task: Task, perform: (Task) -> Unit) {
+        //seeu 針對data class以immutable方式處理 更新時不更改內容而是整個置換
         val cachedTask = Task(task.title, task.description, task.id).apply {
             isCompleted = task.isCompleted
         }

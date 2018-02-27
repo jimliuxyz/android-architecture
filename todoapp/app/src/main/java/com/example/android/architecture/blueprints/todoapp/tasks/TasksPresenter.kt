@@ -21,7 +21,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Listens to user actions from the UI ([TasksFragment]), retrieves the data and updates the
@@ -34,6 +34,7 @@ class TasksPresenter(val tasksRepository: TasksRepository, val tasksView: TasksC
 
     private var firstLoad = true
 
+    //seeu 建構函數
     init {
         tasksView.presenter = this
     }
@@ -85,6 +86,7 @@ class TasksPresenter(val tasksRepository: TasksRepository, val tasksView: TasksC
                 }
 
                 // We filter the tasks based on the requestType
+                //seeu for的內部變數不用額外宣告
                 for (task in tasks) {
                     when (currentFiltering) {
                         TasksFilterType.ALL_TASKS -> tasksToShow.add(task)
@@ -130,6 +132,7 @@ class TasksPresenter(val tasksRepository: TasksRepository, val tasksView: TasksC
     }
 
     private fun showFilterLabel() {
+        //seeu when-else
         when (currentFiltering) {
             TasksFilterType.ACTIVE_TASKS -> tasksView.showActiveFilterLabel()
             TasksFilterType.COMPLETED_TASKS -> tasksView.showCompletedFilterLabel()
@@ -145,6 +148,7 @@ class TasksPresenter(val tasksRepository: TasksRepository, val tasksView: TasksC
         }
     }
 
+    //seeu addNewTask在presenter什麼也沒做 但還是繞進來 對view來說可以變得更被動
     override fun addNewTask() {
         tasksView.showAddTask()
     }
