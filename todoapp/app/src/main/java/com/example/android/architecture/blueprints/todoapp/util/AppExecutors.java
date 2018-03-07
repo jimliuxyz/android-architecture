@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
  * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
  * webservice requests).
  */
-public class AppExecutors {
+public class AppExecutors { //seeu 建立Thread切換機制
 
     private static final int THREAD_COUNT = 3;
 
