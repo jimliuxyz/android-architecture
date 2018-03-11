@@ -29,6 +29,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {TasksRepositoryModule.class,
         ApplicationModule.class,
         ActivityBindingModule.class,
+        //seeu 至少加入AndroidSupportInjectionModule
         AndroidSupportInjectionModule.class})
 public interface AppComponent extends AndroidInjector<ToDoApplication> {
 
