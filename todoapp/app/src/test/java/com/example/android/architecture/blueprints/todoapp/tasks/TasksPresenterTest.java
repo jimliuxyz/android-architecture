@@ -63,11 +63,13 @@ public class TasksPresenterTest {
     public void setupTasksPresenter() {
         // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
         // inject the mocks in the test the initMocks method needs to be called.
+        //seeu @Mock宣告需經由initMocks才能實體化
         MockitoAnnotations.initMocks(this);
 
         // Get a reference to the class under test
         mTasksPresenter = new TasksPresenter(mTasksRepository, mTasksView);
 
+        //seeu 指定呼叫mTasksView.isActive()時固定回傳true
         // The presenter won't update the view unless it's active.
         when(mTasksView.isActive()).thenReturn(true);
 
@@ -87,20 +89,26 @@ public class TasksPresenterTest {
 
     @Test
     public void loadAllTasksFromRepositoryAndLoadIntoView() {
+        //seeu 一個驗證流程
         // Given an initialized TasksPresenter with initialized tasks
         // When loading of Tasks is requested
         mTasksPresenter.setFiltering(TasksFilterType.ALL_TASKS);
+        //seeu loadTasks觸發執行mTasksRepository的getTasks
         mTasksPresenter.loadTasks(true);
 
+        //seeu 捕捉mTasksRepository.getTasks被呼叫時傳入的參數(此例中是一個callback)
         // Callback is captured and invoked with stubbed tasks
         verify(mTasksRepository).getTasks(mLoadTasksCallbackCaptor.capture());
+        //seeu 因為mTasksRepository是假物件 不會執行callback回傳tasks給mTasksPresenter 所以這裡要代替回傳
         mLoadTasksCallbackCaptor.getValue().onTasksLoaded(TASKS);
 
         // Then progress indicator is shown
+        //seeu 驗證依序呼叫了setLoadingIndicator true false
         InOrder inOrder = inOrder(mTasksView);
         inOrder.verify(mTasksView).setLoadingIndicator(true);
         // Then progress indicator is hidden and all tasks are shown in UI
         inOrder.verify(mTasksView).setLoadingIndicator(false);
+        //seeu 驗證mTasksView.showTasks被呼叫 且傳入數量為3的list
         ArgumentCaptor<List> showTasksArgumentCaptor = ArgumentCaptor.forClass(List.class);
         verify(mTasksView).showTasks(showTasksArgumentCaptor.capture());
         assertTrue(showTasksArgumentCaptor.getValue().size() == 3);

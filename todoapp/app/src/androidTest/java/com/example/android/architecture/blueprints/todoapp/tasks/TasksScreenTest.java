@@ -407,6 +407,7 @@ public class TasksScreenTest {
         // then no tasks should appear
         onView(withText(TITLE1)).check(matches(not(isDisplayed())));
 
+        //seeu 旋轉手機
         // when rotating the screen
         TestUtils.rotateOrientation(mTasksActivityTestRule.getActivity());
 
